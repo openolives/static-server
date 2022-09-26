@@ -6,7 +6,9 @@ package cmd
 
 import (
 	"fmt"
+	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 )
 
@@ -22,6 +24,18 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("start called")
+		router := gin.Default()
+		router.StaticFS("/", http.Dir(args[0]))
+
+		// router.StaticFS("/", http.Dir("mockui"))
+		// router.Static("/assets", "./assets")
+		// router.StaticFS("/more_static", http.Dir("my_file_system"))
+		// router.StaticFile("/favicon.ico", "./resources/favicon.ico")
+		// router.StaticFileFS("/more_favicon.ico", "more_favicon.ico", http.Dir("my_file_system"))
+
+		// Listen and serve on 0.0.0.0:8080
+		router.Run(":8080")
+		// router.Run(":3000")
 	},
 }
 
